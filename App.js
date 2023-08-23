@@ -7,28 +7,33 @@ export default function App() {
   const [random, setRandom] = useState(Math.floor(Math.random() * 100) + 1);
   const [message, setMessage] = useState("Guess a number between 1-100");
   const [counter, setCounter] = useState(0);
-  const plusCounter = () => {
-    setCounter(counter + 1);
-  };
+  
   const calculate = () => {
     if (guess > random) {
+      setCounter(counter + 1)
       setMessage("Your " + guess + " is too high");
+      
     }
     if (guess < random) {
+      setCounter(counter + 1)
       setMessage("Your " + guess + " is too low");
+    
     }
     if (guess == random) {
+      setCounter(counter + 1)
       setMessage(
-        Alert.alert("You guessed the number in " + counter + " guesses"),
-        setRandom(Math.floor(Math.random() * 100) + 1),
-        setCounter(0),
-
+        Alert.alert("You guessed the number in " + counter + " guesses")
       );
+      setRandom(Math.floor(Math.random() * 100) + 1),
+        setCounter(0),
+        setMessage("Guess a number between 1-100");
     }
   };
   return (
     <View style={styles.container}>
-      <Text>{message}</Text>
+      <Text>
+        {message}
+      </Text>
       <TextInput
         inputMode="numeric"
         style={{ width: 200, borderColor: "gray", borderWidth: 1 }}
@@ -37,7 +42,6 @@ export default function App() {
       <Button
         onPress={() => {
           calculate();
-          plusCounter();
         }}
         title="Make guess"
       />
