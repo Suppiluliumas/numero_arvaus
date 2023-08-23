@@ -1,10 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
+import { StyleSheet, Text, View, Button, TextInput, Alert } from "react-native";
 
 export default function App() {
+  const [guess, setGuess] = useState(0);
+  const [random, setRandom] = useState(Math.floor(Math.random() * 100) + 1);
+  const [message, setMessage] = useState("Guess a number between 1-100");
+  const [counter, setCounter] = useState(0);
+  const plusCounter = () => {
+    setCounter(counter + 1);
+  };
+  const calculate = () => {
+    if (guess > random) {
+      setMessage("Your " + guess + " is too high");
+    }
+    if (guess < random) {
+      setMessage("Your " + guess + " is too low");
+    }
+    if (guess == random) {
+      setMessage(
+        Alert.alert("You guessed the number in " + counter + " guesses"),
+        setRandom(Math.floor(Math.random() * 100) + 1),
+        setCounter(0),
+
+      );
+    }
+  };
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>{message}</Text>
+      <TextInput
+        inputMode="numeric"
+        style={{ width: 200, borderColor: "gray", borderWidth: 1 }}
+        onChangeText={(guess) => setGuess(parseInt(guess))}
+      ></TextInput>
+      <Button
+        onPress={() => {
+          calculate();
+          plusCounter();
+        }}
+        title="Make guess"
+      />
       <StatusBar style="auto" />
     </View>
   );
@@ -13,8 +49,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
